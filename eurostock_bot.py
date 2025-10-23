@@ -13,6 +13,8 @@ TOKEN = "7840559432:AAGezhFNq11JEMYyAMbxbMpxzFeAY7LiJqo"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOGO_PATH = os.path.join(BASE_DIR, "Logo.jpg")
 REVIEW_FOLDER = os.path.join(BASE_DIR, "Review")
+if not os.path.exists(REVIEW_FOLDER):
+    logging.warning(f"[Render] Le dossier Review est introuvable à {REVIEW_FOLDER}. Vérifie qu’il est bien dans ton dépôt GitHub.")
 
 # ===========================
 # LOGGING
