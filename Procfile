@@ -1,0 +1,1 @@
+worker: python eurostock_bot.py
