@@ -8,8 +8,11 @@ from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandle
 # CONFIGURATION
 # ===========================
 TOKEN = "7840559432:AAGezhFNq11JEMYyAMbxbMpxzFeAY7LiJqo"
-LOGO_PATH = r"C:\Users\Kaido\Desktop\Logo.jpg"
-REVIEW_FOLDER = r"C:\Users\Kaido\Desktop\Nouveau dossier\Review"
+
+# Chemins relatifs pour Render (et aussi fonctionnels localement)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+LOGO_PATH = os.path.join(BASE_DIR, "Logo.jpg")
+REVIEW_FOLDER = os.path.join(BASE_DIR, "Review")
 
 # ===========================
 # LOGGING
@@ -82,19 +85,20 @@ CUSTOM_REVIEW_TEXTS = [
     "⭐️⭐️⭐️⭐️⭐️\n<b>REVIEWED PRODUCT:</b> EUROSTOCK BILL SERVICE\n\nBest experience I’ve had online. Trusted and super fast!\n\n— <i>Verified Customer</i>\n\n💬 <b>Order now via</b> 👉 <a href='https://t.me/cvvskyy'>@cvvskyy</a>",
 ]
 
-
 # ===========================
 # CHARGE LES IMAGES
 # ===========================
 REVIEWS = []
-image_files = sorted([f for f in os.listdir(REVIEW_FOLDER) if f.lower().endswith((".png", ".jpg", ".jpeg"))])
-
-for i, file in enumerate(image_files):
-    text = CUSTOM_REVIEW_TEXTS[i] if i < len(CUSTOM_REVIEW_TEXTS) else CUSTOM_REVIEW_TEXTS[-1]
-    REVIEWS.append({
-        "photo": os.path.join(REVIEW_FOLDER, file),
-        "caption": text
-    })
+if os.path.exists(REVIEW_FOLDER):
+    image_files = sorted([f for f in os.listdir(REVIEW_FOLDER) if f.lower().endswith((".png", ".jpg", ".jpeg"))])
+    for i, file in enumerate(image_files):
+        text = CUSTOM_REVIEW_TEXTS[i] if i < len(CUSTOM_REVIEW_TEXTS) else CUSTOM_REVIEW_TEXTS[-1]
+        REVIEWS.append({
+            "photo": os.path.join(REVIEW_FOLDER, file),
+            "caption": text
+        })
+else:
+    logging.error(f"Review folder not found: {REVIEW_FOLDER}")
 
 # ===========================
 # MENU PRINCIPAL
